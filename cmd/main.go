@@ -126,7 +126,7 @@ func loadTasks(s *service.TaskService) {
 }
 
 func saveTasks(s *service.TaskService) {
-	data, err := json.MarshalIndent(s.Tasks, "", " ")
+	data, err := json.MarshalIndent(s.Tasks(), "", " ")
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error encoding tasks: %v\n", err)
 		os.Exit(1)
