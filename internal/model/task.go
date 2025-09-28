@@ -2,6 +2,7 @@ package model
 
 import "time"
 
+// Task represents single task in the system
 type Task struct {
 	ID          int
 	Description string

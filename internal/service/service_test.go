@@ -86,9 +86,9 @@ func TestList(t *testing.T) {
 	assert.Len(t, todo, 1)
 	assert.Equal(t, todo[0].Description, "Todo task")
 
-	in_progres := srv.ListTasks("in-progress")
-	assert.Len(t, in_progres, 1)
-	assert.Equal(t, in_progres[0].Description, "In Progress task")
+	inProgress := srv.ListTasks("in-progress")
+	assert.Len(t, inProgress, 1)
+	assert.Equal(t, inProgress[0].Description, "In Progress task")
 
 	all := srv.ListTasks("")
 	assert.Len(t, all, 3)

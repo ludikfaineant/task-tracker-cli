@@ -6,22 +6,27 @@ import (
 	"time"
 )
 
+// TaskService manages a list of tasks
 type TaskService struct {
 	tasks []model.Task
 }
 
+// New returns a new TaskService with an empty task list
 func New() *TaskService {
 	return &TaskService{tasks: []model.Task{}}
 }
 
+// Tasks returns a copy of all tasks in the service
 func (s *TaskService) Tasks() []model.Task {
 	return s.tasks
 }
 
+// Load replaces the current list of tasks with the given slice
 func (s *TaskService) Load(tasks []model.Task) {
 	s.tasks = tasks
 }
 
+// AddTask adds a new task with the given description and returns its ID and error
 func (s *TaskService) AddTask(description string) (int, error) {
 	if description == "" {
 		return 0, fmt.Errorf("description cannot be empty")
@@ -38,6 +43,7 @@ func (s *TaskService) AddTask(description string) (int, error) {
 	return id, nil
 }
 
+// UpdateTask update the desciption of a task by ID and returns error if not found
 func (s *TaskService) UpdateTask(id int, description string) error {
 	idx, err := findID(s.tasks, id)
 	if err != nil {
@@ -48,6 +54,7 @@ func (s *TaskService) UpdateTask(id int, description string) error {
 	return nil
 }
 
+// DeleteTask removes a task by ID and returns error if not found
 func (s *TaskService) DeleteTask(id int) error {
 	idx, err := findID(s.tasks, id)
 	if err != nil {
@@ -57,6 +64,7 @@ func (s *TaskService) DeleteTask(id int) error {
 	return nil
 }
 
+// ListTasks returns all tasks, optionally filtered by stasus {"done", "todo", "in-progress"}
 func (s *TaskService) ListTasks(by string) []model.Task {
 	var result []model.Task
 	if by == "todo" || by == "done" || by == "in-progress" {
@@ -71,6 +79,7 @@ func (s *TaskService) ListTasks(by string) []model.Task {
 	return result
 }
 
+// MarkDone marks the task with the given ID as done and returns error if not found
 func (s *TaskService) MarkDone(id int) error {
 	idx, err := findID(s.tasks, id)
 	if err != nil {
@@ -81,6 +90,7 @@ func (s *TaskService) MarkDone(id int) error {
 	return nil
 }
 
+// MarkInProgress marks the task with the given ID as in-progress and returns error if not found
 func (s *TaskService) MarkInProgress(id int) error {
 	idx, err := findID(s.tasks, id)
 	if err != nil {
@@ -91,6 +101,7 @@ func (s *TaskService) MarkInProgress(id int) error {
 	return nil
 }
 
+// GetTask returns a pointer to the task with the given ID and error if not found
 func (s *TaskService) GetTask(id int) (*model.Task, error) {
 	idx, err := findID(s.tasks, id)
 	if err != nil {
